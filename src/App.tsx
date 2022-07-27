@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import "./styles.css";
 import { Database, QueryExecResult } from "sql.js";
-import { loadDb } from "./db";
+import { loadDb, populateDb } from "./db";
+import { Koan } from "./Koan";
+import { ResultsTable } from "./ResultsTable";
 
 export default function App() {
   const [db, setDb] = useState<null | Database>(null);
@@ -27,12 +29,11 @@ export default function App() {
   else return <SQLRepl db={db} />;
 }
 
-/**
- * A simple SQL read-eval-print-loop
- */
 function SQLRepl({ db }: { db: Database }) {
   const [error, setError] = useState<unknown>(null);
   const [results, setResults] = useState<QueryExecResult[]>([]);
+
+  populateDb(db);
 
   function exec(sql: string) {
     try {
@@ -49,53 +50,33 @@ function SQLRepl({ db }: { db: Database }) {
 
   return (
     <div className="App">
-      <h1>React SQL interpreter</h1>
+      <Koan
+        db={db}
+        meditation={"Meditate on upper-case queries"}
+        prompt={"SELECT 1"}
+        answer={"SELECT 1"}
+      />
 
-      <textarea
-        onChange={(e) => exec(e.target.value)}
-        placeholder="Enter some SQL. No inspiration ? Try “select sqlite_version()”"
-      ></textarea>
+      <Koan
+        db={db}
+        meditation={"Meditate on lower-case queries"}
+        prompt={"_ 1"}
+        answer={"SELECT 1"}
+      />
 
-      <pre className="error">{String(error || "")}</pre>
+      <Koan
+        db={db}
+        meditation={"Meditate on selecting all columns from a table"}
+        prompt={"select * from book"}
+        answer={"select * from book"}
+      />
 
-      <pre>
-        {
-          // results contains one object per select statement in the query
-          results.map(({ columns, values }, i) => (
-            <ResultsTable key={i} columns={columns} values={values} />
-          ))
-        }
-      </pre>
+      <Koan
+        db={db}
+        meditation={"Meditate on selecting one column (title) from a table"}
+        prompt={"select _ from book"}
+        answer={"select title from book"}
+      />
     </div>
-  );
-}
-
-/**
- * Renders a single value of the array returned by db.exec(...) as a table
- */
-function ResultsTable({ columns, values }: QueryExecResult) {
-  return (
-    <table>
-      <thead>
-        <tr>
-          {columns.map((columnName, i) => (
-            <td key={i}>{columnName}</td>
-          ))}
-        </tr>
-      </thead>
-
-      <tbody>
-        {
-          // values is an array of arrays representing the results of the query
-          values.map((row, i) => (
-            <tr key={i}>
-              {row.map((value, i) => (
-                <td key={i}>{value}</td>
-              ))}
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
   );
 }
