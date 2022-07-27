@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./styles.css";
-import initSqlJs, { Database } from "sql.js";
+import { Database, QueryExecResult } from "sql.js";
 import { loadDb } from "./db";
 
 export default function App() {
   const [db, setDb] = useState<null | Database>(null);
-  const [error, setError] = useState<null | any>(null);
+  const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
     const invoke = async () => {
@@ -22,18 +22,17 @@ export default function App() {
     invoke();
   }, []);
 
-  if (error) return <pre>{error.toString()}</pre>;
+  if (error) return <pre>{String(error)}</pre>;
   else if (!db) return <pre>Loading...</pre>;
   else return <SQLRepl db={db} />;
 }
 
 /**
  * A simple SQL read-eval-print-loop
- * @param {{db: import("sql.js").Database}} props
  */
 function SQLRepl({ db }: { db: Database }) {
-  const [error, setError] = useState<null | any>(null);
-  const [results, setResults] = useState<any[]>([]);
+  const [error, setError] = useState<unknown>(null);
+  const [results, setResults] = useState<QueryExecResult[]>([]);
 
   function exec(sql: string) {
     try {
@@ -57,7 +56,7 @@ function SQLRepl({ db }: { db: Database }) {
         placeholder="Enter some SQL. No inspiration ? Try “select sqlite_version()”"
       ></textarea>
 
-      <pre className="error">{(error || "").toString()}</pre>
+      <pre className="error">{String(error || "")}</pre>
 
       <pre>
         {
@@ -73,65 +72,26 @@ function SQLRepl({ db }: { db: Database }) {
 
 /**
  * Renders a single value of the array returned by db.exec(...) as a table
- * @param {import("sql.js").QueryExecResult} props
  */
-function ResultsTable({
-  columns,
-  values,
-}: {
-  columns: string[];
-  values: any[];
-}) {
+function ResultsTable({ columns, values }: QueryExecResult) {
   return (
     <table>
       <thead>
         <tr>
-          {columns.map(
-            (
-              columnName:
-                | string
-                | number
-                | boolean
-                | React.ReactElement<
-                    any,
-                    string | React.JSXElementConstructor<any>
-                  >
-                | React.ReactFragment
-                | React.ReactPortal
-                | null
-                | undefined,
-              i: React.Key | null | undefined
-            ) => (
-              <td key={i}>{columnName}</td>
-            )
-          )}
+          {columns.map((columnName, i) => (
+            <td key={i}>{columnName}</td>
+          ))}
         </tr>
       </thead>
 
       <tbody>
         {
           // values is an array of arrays representing the results of the query
-          values.map((row: any[], i: React.Key | null | undefined) => (
+          values.map((row, i) => (
             <tr key={i}>
-              {row.map(
-                (
-                  value:
-                    | string
-                    | number
-                    | boolean
-                    | React.ReactElement<
-                        any,
-                        string | React.JSXElementConstructor<any>
-                      >
-                    | React.ReactFragment
-                    | React.ReactPortal
-                    | null
-                    | undefined,
-                  i: React.Key | null | undefined
-                ) => (
-                  <td key={i}>{value}</td>
-                )
-              )}
+              {row.map((value, i) => (
+                <td key={i}>{value}</td>
+              ))}
             </tr>
           ))
         }
