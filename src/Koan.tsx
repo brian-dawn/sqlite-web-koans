@@ -15,7 +15,7 @@ interface KoanProps {
 }
 
 export const Koan = (props: KoanProps) => {
-  const [error, setError] = useState<unknown>(null);
+  const [error, setError] = useState<unknown | null>(null);
   const [results, setResults] = useState<QueryExecResult[]>([]);
   const [prompt, setPrompt] = useState(props.prompt);
 
@@ -78,7 +78,7 @@ export const Koan = (props: KoanProps) => {
           }}
           onChange={(e) => setPrompt(e.target.value)}
           value={prompt}
-        ></textarea>
+        />
 
         {
           // results contains one object per select statement in the query
@@ -86,6 +86,8 @@ export const Koan = (props: KoanProps) => {
             <ResultsTable key={i} columns={columns} values={values} />
           ))
         }
+
+        {error !== null && <pre>{String(error)}</pre>}
       </div>
     </div>
   );
