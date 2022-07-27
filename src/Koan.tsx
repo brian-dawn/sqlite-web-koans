@@ -72,6 +72,7 @@ export const Koan = (props: KoanProps) => {
       >
         <textarea
           style={{
+            padding: ".5em",
             width: "20em",
             height: "1em",
           }}
