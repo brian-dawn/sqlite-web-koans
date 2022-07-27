@@ -20,13 +20,15 @@
   "devDependencies": {
     "@craco/craco": "^5.9.0",
     "@types/sql.js": "^1.4.3",
+    "prettier": "^2.7.1",
     "typescript": "^4.7.4"
   },
   "scripts": {
     "start": "craco start",
     "build": "craco build",
     "test": "craco test --env=jsdom",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "format": "prettier . --write"
   },
   "browserslist": [
     ">0.2%",
