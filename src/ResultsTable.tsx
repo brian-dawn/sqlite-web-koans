@@ -24,7 +24,14 @@ export function ResultsTable(props: ResultsTableProps) {
           props.values.map((row, i) => (
             <tr key={i}>
               {row.map((value, i) => (
-                <td key={i}>{value}</td>
+                <td
+                  style={{
+                    padding: ".25em",
+                  }}
+                  key={i}
+                >
+                  {value}
+                </td>
               ))}
             </tr>
           ))
