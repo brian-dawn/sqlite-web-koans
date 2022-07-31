@@ -38,31 +38,40 @@ export const Koan = (props: KoanProps) => {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
         flexWrap: "wrap",
         alignItems: "center",
         padding: ".5em",
       }}
     >
-      <h3
+      <div
         style={{
-          color: solved ? "green" : "red",
-          marginRight: ".5em",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          flexWrap: "wrap",
         }}
       >
-        {props.meditation}
-      </h3>
+        <h3
+          style={{
+            color: solved ? "green" : "red",
+            marginRight: ".5em",
+          }}
+        >
+          {props.meditation}
+        </h3>
 
-      <button
-        style={{
-          marginRight: "1em",
-        }}
-        onClick={() => {
-          exec(prompt);
-        }}
-      >
-        Run
-      </button>
+        <button
+          style={{
+            marginRight: "1em",
+          }}
+          onClick={() => {
+            exec(prompt);
+          }}
+        >
+          Run
+        </button>
+      </div>
 
       <div
         style={{
