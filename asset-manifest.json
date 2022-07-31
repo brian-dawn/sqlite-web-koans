@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/sqlite-web-koans/static/css/main.29f1f53d.chunk.css",
-    "main.js": "/sqlite-web-koans/static/js/main.bf94fd35.chunk.js",
-    "main.js.map": "/sqlite-web-koans/static/js/main.bf94fd35.chunk.js.map",
+    "main.js": "/sqlite-web-koans/static/js/main.70981363.chunk.js",
+    "main.js.map": "/sqlite-web-koans/static/js/main.70981363.chunk.js.map",
     "runtime-main.js": "/sqlite-web-koans/static/js/runtime-main.011f11d3.js",
     "runtime-main.js.map": "/sqlite-web-koans/static/js/runtime-main.011f11d3.js.map",
     "static/js/2.dd3841d3.chunk.js": "/sqlite-web-koans/static/js/2.dd3841d3.chunk.js",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.011f11d3.js",
     "static/js/2.dd3841d3.chunk.js",
     "static/css/main.29f1f53d.chunk.css",
-    "static/js/main.bf94fd35.chunk.js"
+    "static/js/main.70981363.chunk.js"
   ]
 }
